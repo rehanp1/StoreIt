@@ -1,6 +1,9 @@
 # StoreIt – Cloud-Based Storage Management Platform
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2ffa2a1 (Updated README.md)
 ![StoreIt Dashboard](/client/public/assets/storeIt_img.png)
 
 ## Overview
