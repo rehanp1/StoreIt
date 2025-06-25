@@ -1,6 +1,7 @@
 # StoreIt – Cloud-Based Storage Management Platform
 
-![StoreIt Dashboard](image1)
+
+![StoreIt Dashboard](/client/public/assets/storeIt_img.png)
 
 ## Overview
 
@@ -61,7 +62,7 @@
 
 ## Dashboard Preview
 
-![StoreIt Dashboard](image1)
+![StoreIt Dashboard](/client/public/assets/storeIt_img.png)
 
 ---
 
@@ -78,6 +79,6 @@
 
 ## Author
 
-- **Rehan Pathan** ([rehanpathan7086@gmail.com](mailto:rehanpathan7086@gmail.com))
+- **Rehan Pathan** ([rehanpathan8012@gmail.com](mailto:rehanpathan8012@gmail.com))
 
 ---
