@@ -20,7 +20,12 @@ import { Link } from "react-router-dom";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { getDownloadUrl } from "@/lib/utils";
-import { deleteFile, renameFile, shareFile, unShareFile } from "@/services/file.service";
+import {
+  deleteFile,
+  renameFile,
+  shareFile,
+  unShareFile,
+} from "@/services/file.service";
 import { FileDetails, ShareInput } from "./ActionsModalContent";
 import useUserAccount from "@/hooks/useUserAccount";
 
@@ -32,7 +37,7 @@ const ActionDropdown = ({ file }: { file: FileProps }) => {
   const [name, setName] = useState(file.name);
   const [emails, setEmails] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { account, files, setFiles } = useUserAccount();
+  const { account, setFiles } = useUserAccount();
 
   const closeAllModals = () => {
     setIsModalOpen(false);
