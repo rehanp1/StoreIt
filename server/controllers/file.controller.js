@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import { File } from "../models/file.model.js";
 import { getFileType, uploadOnCloudinary } from "../utils/index.js";
 
@@ -212,43 +213,36 @@ export const searchFile = async (req, res) => {
 export const totalSpaceUsed = async (req, res) => {
   try {
     const { user } = req;
+    console.log(user.id);
 
-    const files = await File.find({
-      "owner.id": user.id,
+    const [filesGroupByType, recentUploadFiles] = await Promise.all([
+      File.aggregate([
+        {
+          $match: { "owner.id": new Types.ObjectId(user.id) },
+        },
+        {
+          $group: {
+            _id: "$type",
+            size: { $sum: "$size" },
+            latestDate: { $max: "$updatedAt" },
+          },
+        },
+      ]),
+
+      File.find({ "owner.id": user.id }).sort({ createdAt: -1 }).limit(10),
+    ]);
+
+    let totalSpace = { used: 0, all: 500 * 1024 * 1024 }; //500MB space allotted
+
+    filesGroupByType.forEach((d) => {
+      totalSpace[d._id] = { size: d.size, latestDate: d.latestDate };
+      totalSpace.used += d.size;
     });
 
-    const totalSpace = {
-      image: { size: 0, latestDate: "" },
-      document: { size: 0, latestDate: "" },
-      video: { size: 0, latestDate: "" },
-      audio: { size: 0, latestDate: "" },
-      other: { size: 0, latestDate: "" },
-      used: 0,
-      all: .056 * 1024 * 1024 * 1024 /* 1GB available storage */,
-    };
-
-    files.forEach((file) => {
-      const fileType = file.type;
-      totalSpace[fileType].size += file.size;
-      totalSpace.used += file.size;
-
-      if (
-        !totalSpace[fileType].latestDate ||
-        new Date(file.updatedAt) > new Date(totalSpace[fileType].latestDate)
-      ) {
-        totalSpace[fileType].latestDate = file.updatedAt;
-      }
+    res.status(200).json({
+      success: true,
+      results: { totalSpace, recentUploadFiles },
     });
-
-    const recentUploadFiles = files.sort((a, b) => {
-      const dateA = new Date(a.createdAt);
-      const dateB = new Date(b.createdAt);
-      return dateB - dateA;
-    }).slice(0, 10);
-
-    res
-      .status(200)
-      .json({ success: true, results: { totalSpace, recentUploadFiles } });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }

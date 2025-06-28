@@ -1,4 +1,4 @@
-import { useCallback, useState, type ChangeEvent, type FormEvent } from "react";
+import { useCallback, useState, type ChangeEvent } from "react";
 import { Button } from "./ui/button";
 import {
   cn,
@@ -8,10 +8,9 @@ import {
 } from "@/lib/utils";
 import Thumbnail from "./Thumbnail";
 import { MAX_FILE_SIZE } from "@/constants";
-import { toast } from "@/hooks/use-toast";
 import { uploadFile } from "@/services/file.service";
 import { useLocation } from "react-router-dom";
-import useUserAccount from "@/hooks/useUserAccount";
+import { toast } from "react-toastify";
 
 interface Props {
   id: string;
@@ -45,28 +44,18 @@ const FileUploader = ({
       console.log(availableSpace, s, filesSummary?.results?.totalSpace);
 
       if (availableSpace > getTotalFilesSize(selectedFiles)) {
-        toast({
-          description: (
-            <p className="body-2 text-white">
-              Space is not sufficient for the files.
-            </p>
-          ),
-          className: "error-toast",
-        });
+        toast.error("Space is not sufficient for the files.");
         return;
       }
 
       const uploadPromises = selectedFiles.map(async (file) => {
         if (file.size > MAX_FILE_SIZE) {
-          toast({
-            description: (
-              <p className="body-2 text-white">
-                <span className="font-semibold">{file.name}</span> is too large.
-                Max file size is 50MB.
-              </p>
-            ),
-            className: "error-toast",
-          });
+          toast.error(
+            <p className="text-sm">
+              <span className="font-semibold">{file.name}</span> is too large.
+              Max file size is 50MB.
+            </p>
+          );
           return;
         }
 

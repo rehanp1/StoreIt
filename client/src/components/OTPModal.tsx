@@ -14,12 +14,12 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { toast } from "@/hooks/use-toast";
 import useUserAccount from "@/hooks/useUserAccount";
 import { verifyOtp, resendOtp } from "@/services/auth.service";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { useState, type MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const OTPModal = ({ email }: { email: string }) => {
   const { setIsLoggedIn } = useUserAccount();
@@ -47,15 +47,9 @@ const OTPModal = ({ email }: { email: string }) => {
     const data = await resendOtp(email);
 
     if (data.success) {
-      toast({
-        description: "OTP resent to your email Id successfully",
-        variant: "success",
-      });
+      toast.success("OTP resent to your email successfully");
     } else {
-      toast({
-        description: data.message || data.error,
-        variant: "destructive",
-      });
+      toast.error(data.message || data.error);
     }
   };
 

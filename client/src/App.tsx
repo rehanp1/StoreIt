@@ -5,13 +5,12 @@ import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import DynamicPage from "./pages/DynamicPage";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
-
 import ProtectedRoute from "./components/ProtectedRoute";
 import RootLayout from "./layout/RootLayout";
-import { Toaster } from "./components/ui/toaster";
 import useUserAccount from "./hooks/useUserAccount";
 import RouteTracker from "./components/RouteTracker";
 import Dashboard from "./pages/Dashboard";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const { isLoggedIn } = useUserAccount();
@@ -52,7 +51,7 @@ function App() {
         <Route path="*" element={<p>Not found page</p>} />
       </Routes>
 
-      <Toaster />
+      <ToastContainer position="top-center" autoClose={2000} />
     </>
   );
 }

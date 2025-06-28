@@ -4,9 +4,9 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Link } from "react-router-dom";
 import OTPModal from "./OTPModal";
-import { toast } from "@/hooks/use-toast";
 import useUserAccount from "@/hooks/useUserAccount";
 import { signInAndSignUp } from "@/services/auth.service";
+import { toast } from "react-toastify";
 
 type FormType = "sign-in" | "sign-up";
 
@@ -64,15 +64,9 @@ const AuthForm = ({ type }: { type: FormType }) => {
 
       if (data?.success) {
         setAccount(data.user);
-        toast({
-          description: "OTP sent to your email Id successfully",
-          variant: "success",
-        });
+        toast.success("OTP sent to your email successfully");
       } else {
-        toast({
-          description: data.message || data.error,
-          variant: "destructive",
-        });
+        toast.error(data.message || data.error);
       }
 
       setIsLoading(false);

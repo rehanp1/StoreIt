@@ -23,7 +23,7 @@ interface Props {
 const MobileNavigation = ({ id, fullName, email }: Props) => {
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
-  const { setAccount, setIsLoggedIn } = useUserAccount();
+  const { setAccount, setIsLoggedIn, filesSummary } = useUserAccount();
 
   const handleSignOut = async () => {
     const data = await signOut();
@@ -96,7 +96,12 @@ const MobileNavigation = ({ id, fullName, email }: Props) => {
           <Separator className="my-5 bg-light-200/30" />
 
           <div className="flex flex-col justify-between gap-5 pb-5">
-            <FileUploader id={id} fullName={fullName} email={email} />
+            <FileUploader
+              id={id}
+              fullName={fullName}
+              email={email}
+              filesSummary={filesSummary}
+            />
             <Button
               onClick={handleSignOut}
               type="submit"
