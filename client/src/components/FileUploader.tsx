@@ -14,19 +14,13 @@ import { toast } from "react-toastify";
 
 interface Props {
   id: string;
-  fullName: string;
-  email: string;
+  fullName?: string;
+  email?: string;
   className?: string;
   filesSummary: any;
 }
 
-const FileUploader = ({
-  id,
-  fullName,
-  email,
-  className,
-  filesSummary,
-}: Props) => {
+const FileUploader = ({ id, className, filesSummary }: Props) => {
   const [files, setFiles] = useState<File[]>([]);
   const { pathname } = useLocation();
 
