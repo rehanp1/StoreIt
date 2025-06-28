@@ -213,7 +213,6 @@ export const searchFile = async (req, res) => {
 export const totalSpaceUsed = async (req, res) => {
   try {
     const { user } = req;
-    console.log(user.id);
 
     const [filesGroupByType, recentUploadFiles] = await Promise.all([
       File.aggregate([

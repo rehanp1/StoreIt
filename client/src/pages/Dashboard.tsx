@@ -10,15 +10,6 @@ import type { FileProps } from "@/types";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-interface totalSpaceUsedProps {
-  image: { size: number; latestDate: string };
-  document: { size: number; latestDate: string };
-  video: { size: number; latestDate: string };
-  audio: { size: number; latestDate: string };
-  other: { size: number; latestDate: string };
-  used: number;
-  all: number;
-}
 
 const Dashboard = () => {
   const { pathname } = useLocation();

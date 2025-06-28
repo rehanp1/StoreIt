@@ -1,5 +1,6 @@
 import { User } from "../models/user.model.js";
-import { generateOTP, transporter } from "../utils/index.js";
+import { generateOTP } from "../utils/index.js";
+import transporter from "../config/nodemailer.js";
 
 export const signUp = async (req, res) => {
   try {

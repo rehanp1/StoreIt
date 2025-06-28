@@ -6,30 +6,9 @@ export const generateOTP = () => {
   return { otp, expireAt };
 };
 
-//NodeMailer for sending mail
-import nodemailer from "nodemailer";
-import dotenv from "dotenv";
-dotenv.config();
-
-export const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT,
-  secure: false,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASSWORD,
-  },
-});
-
 //Cloudinary for storing files on cloud
-import { v2 as cloudinary } from "cloudinary";
+import cloudinary from "../config/cloudinary.js";
 import fs from "fs";
-
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_CLOUD_API_KEY,
-  api_secret: process.env.CLOUDINARY_CLOUD_API_SECRET,
-});
 
 export const uploadOnCloudinary = async (localFilePath) => {
   try {
