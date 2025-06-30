@@ -231,8 +231,15 @@ export const totalSpaceUsed = async (req, res) => {
       File.find({ "owner.id": user.id }).sort({ createdAt: -1 }).limit(10),
     ]);
 
-    let totalSpace = { used: 0, all: 500 * 1024 * 1024 }; //500MB space allotted
-
+    let totalSpace = {
+      image: { size: 0, latestDate: "" },
+      document: { size: 0, latestDate: "" },
+      video: { size: 0, latestDate: "" },
+      audio: { size: 0, latestDate: "" },
+      other: { size: 0, latestDate: "" },
+      used: 0,
+      all: 500 * 1024 * 1024, //500MB space allotted
+    };
     filesGroupByType.forEach((d) => {
       totalSpace[d._id] = { size: d.size, latestDate: d.latestDate };
       totalSpace.used += d.size;
